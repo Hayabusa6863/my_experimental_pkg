@@ -1,0 +1,4 @@
+<launch>
+	<rosparam command="load" file="$(find my_experimental_pkg)/config/config.yaml"/>
+	<node name="cosinewave_controller" pkg="my_experimental_pkg" type="cosinewave_controller" output="screen"/>
+</launch>

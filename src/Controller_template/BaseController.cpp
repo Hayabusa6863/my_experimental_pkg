@@ -4,12 +4,18 @@
 
 #include <my_experimental_pkg/BaseController.h>
 
-BaseController::BaseController(ros::NodeHandle* nh_){
-    nh = nh_;
-
+BaseController::BaseController(void){
     // タイマ割り込みの設定
-    timer = nh->createTimer(ros::Duration(1.0/controller_frequency), &BaseController::loop, this);
-    pub = nh->advertise<std_msgs::Float64>(topic_name, 1);
+    timer = nh.createTimer(ros::Duration(1.0/controller_frequency), &BaseController::loop, this);
+    pub = nh.advertise<std_msgs::Float64>(topic_name, 1);
+
+    // rosparamの登録
+    XmlRpc::XmlRpcValue rosparams;
+    nh.getParam("motor_list", rosparams);
+    
+    rosparam_value = static_cast<double>(rosparams["value"]);
+
+    ROS_INFO("value: %f", rosparam_value);
     usleep(50000);  // delayを入れないと指令値の最初のほうが欠落する！
     timer_start();
 }

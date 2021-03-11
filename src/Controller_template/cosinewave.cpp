@@ -7,8 +7,7 @@ private:
     const double wave_frequency = 1.0;
 
 public:
-    cosinewave_controller(ros::NodeHandle *nh_)
-        : BaseController(nh_){}
+    cosinewave_controller(void){};
 
     virtual void loop(const ros::TimerEvent& e) override{
         msg.data = cos(2*M_PI*wave_frequency*getTime());
@@ -19,11 +18,7 @@ public:
 
 int main(int argc, char** argv){
     ros::init(argc, argv, "cosinewave_controller");
-    ros::NodeHandle nh;
-    
-    BaseController *controller;
-    controller = new cosinewave_controller(&nh);
-    
+    BaseController *controller = new cosinewave_controller;
     ros::spin();
     return 0;
 }

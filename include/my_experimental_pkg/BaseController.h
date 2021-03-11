@@ -13,21 +13,22 @@
 class BaseController{
 private:
     const double controller_frequency = 100.0;   // コントローラ周波数[Hz]
+    ros::NodeHandle nh;
     std::string topic_name = "value";
     ros::Time t_start;
+    double rosparam_value;  // rosparamから読み取って格納する変数
+
 protected:  // 継承したファイルでも使用したい変数
-    ros::NodeHandle *nh;
     std_msgs::Float64 msg;
     ros::Publisher pub;
-
     ros::Timer timer;
     
 public:
-    BaseController(ros::NodeHandle*);
+    BaseController(void);
     void timer_start(void);
     double getTime(void);
 
-    virtual void loop(const ros::TimerEvent& e) = 0;    // ROSのpublishなどループで回す部分
+    virtual void loop(const ros::TimerEvent&) = 0;    // ROSのpublishなどループで回す部分
     virtual ~BaseController(){};
 };
 

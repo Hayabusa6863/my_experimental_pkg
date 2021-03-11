@@ -7,8 +7,7 @@ private:
     const double wave_frequency = 1.0;
 
 public:
-    sinewave_controller(ros::NodeHandle *nh_)
-        : BaseController(nh_){}
+    sinewave_controller(void){};
 
     virtual void loop(const ros::TimerEvent& e) override{
         msg.data = sin(2*M_PI*wave_frequency*getTime());
@@ -19,11 +18,7 @@ public:
 
 int main(int argc, char** argv){
     ros::init(argc, argv, "sinewave_controller");
-    ros::NodeHandle nh;
-
-    BaseController *controller;
-    controller = new sinewave_controller(&nh);
-
+    BaseController *controller = new sinewave_controller;
     ros::spin();
     return 0;
 }
